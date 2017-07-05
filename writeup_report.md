@@ -169,6 +169,7 @@ Bellow is one sample of one frame image from the center camera:
 ![alt text][image1]
 
 2. Flip images
+
 Since the first track training data are all left turn, we need more data on right turning. One way got in the lecture i to flip the image, and update the steering angle = steeringAngel * (-1).
 
 In my implementation, we do not flip all the images which will increase the training time, but we use a probability parameter, flip images with a parameterized %.
@@ -176,18 +177,22 @@ In my implementation, we do not flip all the images which will increase the trai
  ![alt text][image2]
 
 3. Crop images
+
 Because the original images from camera includes many features which are related to the road driving, e.g. sky, trees and some other objects out side of the road. We I decided to 
 crop the images to remove some areas which not needed.
  
  ![alt text][image3]
 
 4. Gamma Transition on Images
+
 We also noticed that images from camera are impacted by the outdoor whether, day and night, or sun shaine or shading. But in our simulator we cannot get these kind of 
 images. So one way is to use python images utils and cv2 to pre-process images with different gamma transition. To get more image effects I use the random Gamma value to render the images.
+
  ![alt text][image4]
   
  
  5. Rotate Images
+ 
  In previous traffic signal classier projects, we learn that some "rotate based image augmentation" also help on training. In this project, I also add some random rotate step during image augmentations.
  rotation angle is set to smaller than 15 degrees.
  
@@ -195,6 +200,7 @@ images. So one way is to use python images utils and cv2 to pre-process images w
  
  
  6. Shearing Images
+ 
  Per my test this is one important step when can generate images with different steering angle. This technology can help augment more training data with more "turning".
   Here in this project, I use the horizontal Image shearing which transform pixels left or right based on cv2 shearing algorithms. Code lines can be found from helper.py l86-108 ln.
   Shearing image has one parameter which control the horizontal parallel moving pixels, which can be tuned more. I did not do more optimization, but believe this parameter can help the 
@@ -203,11 +209,13 @@ images. So one way is to use python images utils and cv2 to pre-process images w
  ![alt text][image6]
  
  7. Resize Images
+ 
  Final images are been resized to 60x60, which is much smaller than the original one, helps lot on shortening the training time. And since we crop the images and only get the area includes road and direction, so the final image still keep the key features from camera.
+ 
   ![alt text][image7]
  
 
- ###Test and Epochs
+###Test and Epochs Selection
 
 In this project, the test is straight forward. When the training finished, start the ./drive.py service with the model, then start the simulator in track 1 in autonomous mode, drive several laps see whether it run in the road and not off the track.
 During my test, I also leave it running for hours and running as expected in the middle of the road and never off the track.
@@ -237,8 +245,16 @@ In each batch, images are shuffled and picked up randomly.
 I finally randomly shuffled the data set and put 6400/(20032+6400)  =  24.2% of the data into a validation set. 
 
 
-###Future Work
+###Future Work (track2)
+
 The model cannot work well in track 2, especially the first big turn, where the car will drive off the road. 
 The reason is our training data are collected from track 1 which does not has big turn. 
+
+There are two ways to solve track2
+
+1. generalize model algorithms, especially the way to augmentation training data
+2. collect more data from track 2 and train on the same CNN model
+
+
 
 
