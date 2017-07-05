@@ -43,7 +43,7 @@ Using the Udacity provided simulator and my drive.py file, the car can be driven
 python drive.py model.json
 ```
 
-If everything goes well, we can see car drive automatically on track1 in Simulator like bellow
+If everything goes well, we can see car drive automatically on track1 in Simulator like bellow. Longer driving video can be get from [Here](https://github.com/guhuaping/CarND-Behavioral-Cloning-P3/blob/master/video.mp4)
 
 ![alt text][image8]
 
