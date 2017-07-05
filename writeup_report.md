@@ -174,9 +174,9 @@ Bellow is one sample of one frame image from the center camera:
 
 2. Flip images
 
-Since the first track training data are all left turn, we need more data on right turning. One way got in the lecture i to flip the image, and update the steering angle = steeringAngel * (-1).
+Since the first track training data are all left turn, we need more data on right turning. One way got in the lecture is to flip the image, and update the steering angle = steeringAngel * (-1).
 
-In my implementation, we do not flip all the images which will increase the training time, but we use a probability parameter, flip images with a parameterized %.
+In my implementation, I do not flip all the images which will increase the training time, but we use a probability parameter, flip images with this probability default to 50%.
  
  ![alt text][image2]
 
@@ -190,7 +190,12 @@ crop the images to remove some areas which not needed.
 4. Gamma Transition on Images
 
 We also noticed that images from camera are impacted by the outdoor whether, day and night, or sun shaine or shading. But in our simulator we cannot get these kind of 
-images. So one way is to use python images utils and cv2 to pre-process images with different gamma transition. To get more image effects I use the random Gamma value to render the images.
+images. So one way is to use python images utils and cv2 to pre-process images with different gamma transition.
+
+Gamma can transform the image with different brightness, which can simulate day and shade very well. To avoid too dark or too bright, we set a limit of range of gamma value
+
+    gamma = np.random.uniform(0.4, 1.5)
+    
 
  ![alt text][image4]
   
@@ -200,15 +205,26 @@ images. So one way is to use python images utils and cv2 to pre-process images w
  In previous traffic signal classier projects, we learn that some "rotate based image augmentation" also help on training. In this project, I also add some random rotate step during image augmentations.
  rotation angle is set to smaller than 15 degrees.
  
+    angle = np.random.uniform(-rotation_amount, rotation_amount + 1)
+ 
+ 
  ![alt text][image5]
  
  
  6. Shearing Images
  
- Per my test this is one important step when can generate images with different steering angle. This technology can help augment more training data with more "turning".
+ In the UDacity training data, we can see from the cvs log file, majority of the data with a "steering angle = 0", we need to augment more data with "steering angle != 0".
+ Per my test this is one important step which can generate images with different **steering angles**. This technology can help augment more training data with more "turning".
   Here in this project, I use the horizontal Image shearing which transform pixels left or right based on cv2 shearing algorithms. Code lines can be found from helper.py l86-108 ln.
-  Shearing image has one parameter which control the horizontal parallel moving pixels, which can be tuned more. I did not do more optimization, but believe this parameter can help the 
-  second track training since if increase the shearing rang can increase the steering angle. (in track 2, there are many big turn, U-turn)    
+  Shearing image has one parameter which control the horizontal parallel moving pixels, which can be tuned more. 
+  
+  Now our raw image size is about 320 x 160 , we use the range of 200 pixel, when we seek the shearing point, we start from middle +/- this range.
+  
+    rows, cols, ch = image.shape
+    dx = np.random.randint(-shear_range, shear_range + 1)
+    random_point = [cols / 2 + dx, rows / 2]
+    
+    
   
  ![alt text][image6]
  
