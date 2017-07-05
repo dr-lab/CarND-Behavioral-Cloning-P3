@@ -20,6 +20,7 @@ The goals / steps of this project are the following:
 [image5]: ./writeup_images/rotated_image.png "Rotted Image"
 [image6]: ./writeup_images/sheared_image.png "sheared Image"
 [image7]: ./writeup_images/final_60x60.png "final 60x60 Image"
+[image8]: ./writeup_images/drive.gif "Drive GIF"
 
 
 My project includes the following files:
@@ -42,6 +43,9 @@ Using the Udacity provided simulator and my drive.py file, the car can be driven
 python drive.py model.json
 ```
 
+If everything goes well, we can see car drive automatically on track1 in Simulator like bellow
+
+![alt text][image8]
 
 Model Architecture and Training Strategy
 -
