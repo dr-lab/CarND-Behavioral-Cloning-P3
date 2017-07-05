@@ -270,6 +270,7 @@ Future Work
 -
 
 **Track2**
+
 The model cannot work well in track 2, especially the first big turn, where the car will drive off the road. 
 The reason is our training data are collected from track 1 which does not has big turn. 
 
@@ -279,8 +280,11 @@ There are two ways to solve track2
 2. collect more data from track 2 and train on the same CNN model
 
 **Parameter Tuning**
+
 So far we use some empirical data to set the parameter values, some like camera steering angle adjustment, 
  throttle value, flip probabilities, epochs, batch size, if future all can be tuned with more training tryings.
+ 
+ Now the parameters we used can make the car drive in track1 very well. For next step of generalization , there are still many tuning space we can explore.
  
 
 
