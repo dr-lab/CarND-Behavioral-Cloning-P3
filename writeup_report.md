@@ -1,5 +1,5 @@
 Behavioral Cloning Project (P3) 
----
+=
 
 **Behavioral Cloning Project**
 
@@ -29,7 +29,8 @@ My project includes the following files:
 * model.json contains the CNN network metadata in json format, it is under same folder of model.h5
 * writeup_report.md summarizing the results
 
-**How to run my code**
+How to run my code
+-
 
 My model codes contain two files, one is model.py another is helper.py.
 
@@ -42,9 +43,10 @@ python drive.py model.json
 ```
 
 
-###Model Architecture and Training Strategy
+Model Architecture and Training Strategy
+-
 
-####1. Solution Design Approach
+**1. Solution Design Approach**
 
 The overall strategy for deriving a model architecture was to create a model which can be used by the simulator and drive the car automatically in track1. I tried several rounds before I got the final solution:
 
@@ -62,7 +64,7 @@ But finally after I switch to use the Udacity's training data, the model works f
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
-####2. Final Model Architecture
+**2. Final Model Architecture**
 
 The final model architecture (model.py lines 19-63) consisted of a convolution neural network with the following layers and layer sizes.
 
@@ -127,7 +129,8 @@ My model is based of NVIDIA's well proofed network architecture. Bellow is the k
         Trainable params: 2,116,983
         Non-trainable params: 0
         
-####3. Attempts to reduce overfitting in the model
+**3. Attempts to reduce overfitting in the model**
+
 At the beginning I used the simulator to generate training data, both training and validation results are above 60%, but during testing drive, the car move off the road quickly.
 I believe these are from several reasons:
 1. Training data collected from simulator is small, not big enough
@@ -139,7 +142,7 @@ Finally I decided to use Udacity's training data, which seems big enough and ver
 
 The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track for hours, the track I tested on is Track 1.
 
-####4. Model parameter tuning
+**4. Model parameter tuning**
 
 The model is based on the well tuned NVIDA's network. We use Adam optimizer and mse loss with a learning rate of 1e-4.
 
@@ -156,7 +159,8 @@ There are several other parameters which need more tuning, following are the val
      8. number_of_validation_samples = 6,400 (64 x 100)
              
 
-####5. Creation of the Training Set & Training Process
+**5. Creation of the Training Set & Training Process**
+
 Based on what I tested and tried, training data augmentation are VERY important for the final quality of the model. There are various factors need to be take into consideration:
 
 1. multiple camera images
@@ -215,7 +219,8 @@ images. So one way is to use python images utils and cv2 to pre-process images w
   ![alt text][image7]
  
 
-###Test and Epochs Selection
+Test and Epochs Selection
+-
 
 In this project, the test is straight forward. When the training finished, start the ./drive.py service with the model, then start the simulator in track 1 in autonomous mode, drive several laps see whether it run in the road and not off the track.
 During my test, I also leave it running for hours and running as expected in the middle of the road and never off the track.
@@ -245,8 +250,10 @@ In each batch, images are shuffled and picked up randomly.
 I finally randomly shuffled the data set and put 6400/(20032+6400)  =  24.2% of the data into a validation set. 
 
 
-###Future Work (track2)
+Future Work 
+-
 
+**Track2**
 The model cannot work well in track 2, especially the first big turn, where the car will drive off the road. 
 The reason is our training data are collected from track 1 which does not has big turn. 
 
@@ -254,6 +261,11 @@ There are two ways to solve track2
 
 1. generalize model algorithms, especially the way to augmentation training data
 2. collect more data from track 2 and train on the same CNN model
+
+**Parameter Tuning**
+So far we use some empirical data to set the parameter values, some like camera steering angle adjustment, 
+ throttle value, flip probabilities, epochs, batch size, if future all can be tuned with more training tryings.
+ 
 
 
 
